@@ -18,8 +18,8 @@ public class WoordenTeller {
 
 		this.input = input;
 
-		for (String word : input.split("[ , \\n]+")) {
-			addOccurence(word.trim());
+		for (String word : input.split("[ ,. \\n]+")) {
+			addOccurence(word.trim(),occurences);
 		}
 	}
 
@@ -34,7 +34,7 @@ public class WoordenTeller {
 		return normalizedWord;
 	}
 
-	private int addOccurence(String word){
+	private int addOccurence(String word,Map<String,Integer> occurences){
 		String normalizedWord = stringNormalizer(word);
 
 		if (normalizedWord.isEmpty()) {
@@ -74,10 +74,26 @@ public class WoordenTeller {
 	}
 
 	public Map<String, Set<Integer>> getConcordantie(){
-		Map<String,Set<Integer>> concordanatie = new HashMap<String, Set<Integer>>();
-		for (String word : occurences.keySet()){
+		TreeMap<String,Set<Integer>> concordanatie = new TreeMap<>();
+		int lineCounter = 0;
+		for (String line : input.split("\n")){
+			lineCounter ++;
+			for (String word : line.split("[ ,. \\n]+")) {
 
+				String normalizedString = stringNormalizer(word);
+
+				if (word.isEmpty()){
+					continue;
+				}
+				if (!concordanatie.containsKey(normalizedString)) {
+					concordanatie.put(normalizedString, new HashSet<>());
+				}
+
+				Set<Integer> set = concordanatie.get(normalizedString);
+				set.add(lineCounter);
+			}
 		}
+
 
 		return concordanatie;
 	}

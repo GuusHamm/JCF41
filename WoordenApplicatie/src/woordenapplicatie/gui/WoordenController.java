@@ -7,7 +7,6 @@ package woordenapplicatie.gui;
  */
 
 
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,6 +17,8 @@ import woordenapplicatie.WoordenTeller;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * FXML Controller class
@@ -77,27 +78,34 @@ public class WoordenController implements Initializable {
     @FXML
     private void sorteerAction(ActionEvent event) {
        woordenTeller = new WoordenTeller(taInput.getText());
-		String reversedWords = "";
+		StringBuilder reversedWords = new StringBuilder();
 		for (String word : woordenTeller.sortReverse()){
-			reversedWords += word + "\n";
+			reversedWords.append(word + "\n");
 		}
-		taOutput.setText(reversedWords);
+		taOutput.setText(reversedWords.toString());
     }
 
     @FXML
     private void frequentieAction(ActionEvent event) {
 		woordenTeller = new WoordenTeller(taInput.getText());
-		String result = "";
+		StringBuilder result = new StringBuilder();
 		HashMap<String,Integer> frequency = woordenTeller.getFrequency();
-		for (String key: frequency.keySet()) {
-			result += String.format("%s : %d\n",key,frequency.get(key));
+		for (String key : frequency.keySet()) {
+			result.append(String.format("%s : %d\n",key,frequency.get(key)));
 		}
-		taOutput.setText(result);
+		taOutput.setText(result.toString());
     }
 
     @FXML
     private void concordatieAction(ActionEvent event) {
-         throw new UnsupportedOperationException("Not supported yet."); 
+         woordenTeller = new WoordenTeller(taInput.getText());
+		StringBuilder concordantieString = new StringBuilder();
+
+		TreeMap<String,Set<Integer>> concordantie = (TreeMap<String, Set<Integer>>) woordenTeller.getConcordantie();
+		for (String key : concordantie.keySet()){
+			concordantieString.append(String.format("%s : %s\n",key,concordantie.get(key)));
+		}
+		taOutput.setText(concordantieString.toString());
     }
    
 }
