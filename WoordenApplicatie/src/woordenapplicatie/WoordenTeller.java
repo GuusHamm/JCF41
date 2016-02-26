@@ -69,8 +69,14 @@ public class WoordenTeller {
 		return reversed;
 	}
 
-	public HashMap<String,Integer> getFrequency(){
-		return occurences;
+	public Map<String,Integer> getFrequency(){
+		HashMap<String,Integer> frequency = new LinkedHashMap<>();
+		List<Map.Entry<String, Integer>> sortedOccurences = new ArrayList<>(occurences.entrySet());
+		Collections.sort(sortedOccurences, (entry1, entry2) -> entry1.getValue().compareTo( entry2.getValue() ));
+		for (Map.Entry<String,Integer> entry : sortedOccurences){
+			frequency.put(entry.getKey(),entry.getValue());
+		}
+		return frequency;
 	}
 
 	public Map<String, Set<Integer>> getConcordantie(){

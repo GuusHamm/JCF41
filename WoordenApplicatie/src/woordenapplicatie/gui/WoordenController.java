@@ -15,10 +15,7 @@ import javafx.scene.control.TextArea;
 import woordenapplicatie.WoordenTeller;
 
 import java.net.URL;
-import java.util.HashMap;
-import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * FXML Controller class
@@ -89,7 +86,7 @@ public class WoordenController implements Initializable {
     private void frequentieAction(ActionEvent event) {
 		woordenTeller = new WoordenTeller(taInput.getText());
 		StringBuilder result = new StringBuilder();
-		HashMap<String,Integer> frequency = woordenTeller.getFrequency();
+		HashMap<String,Integer> frequency = (LinkedHashMap<String, Integer>) woordenTeller.getFrequency();
 		for (String key : frequency.keySet()) {
 			result.append(String.format("%s : %d\n",key,frequency.get(key)));
 		}
