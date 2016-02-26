@@ -11,13 +11,17 @@ public class WoordenTeller {
 
 	private HashMap<String, Integer> occurences;
 
-	private final String lineSeparator = "\n";
-
-	public WoordenTeller(String input) {
+	public WoordenTeller() {
 		occurences = new HashMap<>();
+		input = "";
+	}
 
-		this.input = input;
-
+	public void setInput(String rawInput){
+		String normalizedInput = stringNormalizer(rawInput);
+		if (this.input.equals(normalizedInput)){
+			return;
+		}
+		this.input = normalizedInput;
 		for (String word : input.split("[ ,. \\n]+")) {
 			addOccurence(word.trim(),occurences);
 		}
@@ -35,19 +39,17 @@ public class WoordenTeller {
 	}
 
 	private int addOccurence(String word,Map<String,Integer> occurences){
-		String normalizedWord = stringNormalizer(word);
-
-		if (normalizedWord.isEmpty()) {
+		if (word.isEmpty()) {
 			return 0;
 		}
 
-		if (occurences.containsKey(normalizedWord)){
-			occurences.put(normalizedWord,occurences.get(normalizedWord) + 1);
+		if (occurences.containsKey(word)){
+			occurences.put(word,occurences.get(word) + 1);
 		}else{
-			occurences.put(normalizedWord,1);
+			occurences.put(word,1);
 		}
 
-		return occurences.get(normalizedWord);
+		return occurences.get(word);
 	}
 
 	public int getCountOccurences(){
