@@ -31,6 +31,7 @@ public class WoordenTellerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		woordenTeller = new WoordenTeller(DEFAULT_TEXT);
+		woordenTeller = new WoordenTeller();
+		woordenTeller.setInput(DEFAULT_TEXT);
 	}
 }
